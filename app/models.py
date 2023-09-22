@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 
 Universities = (
     ("Learning institution","Learning institution"),
@@ -27,8 +28,11 @@ class Post(models.Model):
     def __str__(self):
         return self.position
     
+    def get_absolute_url(self):
+        return reverse('home')
+    
 def validate_apply_date(apply_date):
-    if apply_date<Post.start_date:
+    if apply_date<timezone.now():
         raise ValidationError("you cannot pick a past date")
 class Apply(models.Model):
     name = models.CharField(max_length=50)
