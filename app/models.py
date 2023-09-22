@@ -28,9 +28,6 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('home')
     
-def validate_apply_date(apply_date):
-    if apply_date<timezone.now():
-        raise ValidationError("you cannot pick a past date")
 class Apply(models.Model):
     name = models.CharField(max_length=50)
     learning_institution = models.CharField(
@@ -39,7 +36,7 @@ class Apply(models.Model):
         default="Learning institution"
     )
     applied_position = models.ForeignKey(Post, on_delete=models.CASCADE)
-    expected_start_date = models.DateTimeField(validators=[validate_apply_date])
+    expected_start_date = models.DateTimeField(timezone.now)
     curriculum_vite = models.FileField(upload_to="cv_uploads")
     recommendation = models.FileField(upload_to="recom_uploads")
     

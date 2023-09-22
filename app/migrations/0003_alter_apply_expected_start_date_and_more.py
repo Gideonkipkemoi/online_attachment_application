@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='apply',
             name='expected_start_date',
-            field=models.DateTimeField(validators=[app.models.validate_apply_date]),
+            field=models.DateTimeField(),
         ),
         migrations.AlterField(
             model_name='apply',

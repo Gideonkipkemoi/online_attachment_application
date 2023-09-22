@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Post
+from .models import Post, Apply
 from django.views.generic import (
     ListView,
     CreateView,
@@ -19,3 +19,12 @@ class PostCreateView(CreateView):
     model = Post
     fields = ['position', 'company', 'description']
     template_name = 'post_attachment.html'
+    
+class ApplyCreateView(CreateView):
+    model = Apply
+    fields = ['name', 'learning_institution',
+              'applied_position',
+              'curriculum_vite',
+              'recommendation'
+]
+    template_name = 'apply_attachment.html'
