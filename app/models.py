@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 
+
 Universities = (
     ("Learning institution","Learning institution"),
     ("Moi university","Moi university"),
@@ -14,15 +15,11 @@ Universities = (
     
 )
 
-def validate_post_date(post_date):
-    if post_date<timezone.now():
-        raise ValidationError("you cannot pick a past date")
-
 class Post(models.Model):
     position = models.CharField(max_length=30)
     company = models.CharField(max_length=30)
     description = models.TextField()
-    start_date = models.DateTimeField(validators=[validate_post_date])
+    start_date = models.DateTimeField(timezone.now)
     
     
     def __str__(self):

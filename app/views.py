@@ -17,5 +17,5 @@ class PostListView(ListView):
 
 class PostCreateView(CreateView):
     model = Post
-    fields = ['position', 'company', 'description', 'start_date']
+    fields = ['position', 'company', 'description']
     template_name = 'post_attachment.html'
