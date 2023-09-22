@@ -38,7 +38,7 @@ class Apply(models.Model):
         default="Learning institution"
     )
     applied_position = models.ForeignKey(Post, on_delete=models.CASCADE)
-    expected_start_date = models.DateTimeField()
+    expected_start_date = models.DateTimeField(validators=[validate_apply_date])
     curriculum_vite = models.FileField(upload_to="cv_uploads")
     recommendation = models.FileField(upload_to="recom_uploads")
     

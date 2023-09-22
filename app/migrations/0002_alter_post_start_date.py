@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='post',
             name='start_date',
-            field=models.DateTimeField(validators=[app.models.validate_date]),
+            field=models.DateTimeField(validators=[app.models.validate_post_date]),
         ),
     ]
