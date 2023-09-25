@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Post, Apply
+from .form import StartDateForm
 from django.views.generic import (
     ListView,
     CreateView,
@@ -17,8 +18,9 @@ class PostListView(ListView):
 
 class PostCreateView(CreateView):
     model = Post
-    fields = ['position', 'company', 'description']
+    #fields = ['position', 'company', 'description']
     template_name = 'post_attachment.html'
+    form_class = StartDateForm
     
 class ApplyCreateView(CreateView):
     model = Apply
