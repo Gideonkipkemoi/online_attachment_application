@@ -46,6 +46,10 @@ class Apply(models.Model):
     expected_start_date = models.DateField(validators=[validate_date])
     curriculum_vite = models.FileField(upload_to="cv_uploads")
     recommendation = models.FileField(upload_to="recom_uploads")
+    
+    @property
+    def position(self):
+        return self.applied_position.position
 
     
     def __str__(self):

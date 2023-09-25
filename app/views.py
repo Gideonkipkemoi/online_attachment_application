@@ -34,4 +34,3 @@ class ApplyCreateView(CreateView):
     template_name = 'apply_attachment.html'
     form_class = ApplyStartDateForm
     
-    
