@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Post, Apply
-from .form import StartDateForm
+from django.db.models import F
+from .form import StartDateForm, ApplyStartDateForm
 from django.views.generic import (
     ListView,
     CreateView,
@@ -14,6 +15,7 @@ class PostListView(ListView):
     model = Post
     context_object_name = "posts"
     ordering = ["-start_date"]
+    queryset = Post.objects.filter(start_date__gte=F('apply_before'))
     
 
 class PostCreateView(CreateView):
@@ -24,9 +26,10 @@ class PostCreateView(CreateView):
     
 class ApplyCreateView(CreateView):
     model = Apply
-    fields = ['name', 'learning_institution',
+    '''fields = ['name', 'learning_institution',
               'applied_position',
               'curriculum_vite',
               'recommendation'
-]
+]'''
     template_name = 'apply_attachment.html'
+    form_class = ApplyStartDateForm
