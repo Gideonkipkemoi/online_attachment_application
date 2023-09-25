@@ -14,12 +14,15 @@ Universities = (
     ("University of Eldoret","University of Eldoret"),
     
 )
+def validate_start_date(date):
+    if date < timezone.now().date():
+        ValidationError("You cannot choose a past date")
 
 class Post(models.Model):
     position = models.CharField(max_length=30)
     company = models.CharField(max_length=30)
     description = models.TextField()
-    start_date = models.DateTimeField(timezone.now)
+    start_date = models.DateField(validators=[validate_start_date])
     
     
     def __str__(self):
