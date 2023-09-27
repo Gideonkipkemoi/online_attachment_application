@@ -49,7 +49,7 @@ class Apply(models.Model):
     expected_start_date = models.DateField(validators=[validate_expected_start_date])
     curriculum_vite = models.FileField(upload_to="cv_uploads")
     recommendation = models.FileField(upload_to="recom_uploads")
-    application_date = models.DateField(timezone.now)
+    application_date = models.DateField(default=timezone.now)
     @property
     def position(self):
         return self.applied_position.position
