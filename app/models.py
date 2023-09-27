@@ -3,7 +3,7 @@ from django.db.models.query import QuerySet
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.urls import reverse
-
+from datetime import timedelta
 
 Universities = (
     ("Learning institution","Learning institution"),
@@ -33,7 +33,10 @@ class Post(models.Model):
     
     def get_absolute_url(self):
         return reverse('home')
-    
+
+def validate_expected_start_date(date):
+    if date + timedelta(days=5) < timezone.now().date():
+        raise ValidationError("Please apply 5 days from now")  
    
 class Apply(models.Model):
     name = models.CharField(max_length=50)
@@ -43,10 +46,10 @@ class Apply(models.Model):
         default="Learning institution"
     )
     applied_position = models.ForeignKey(Post, on_delete=models.CASCADE)
-    expected_start_date = models.DateField(validators=[validate_date])
+    expected_start_date = models.DateField(validators=[validate_expected_start_date])
     curriculum_vite = models.FileField(upload_to="cv_uploads")
     recommendation = models.FileField(upload_to="recom_uploads")
-    
+    application_date = models.DateField(timezone.now)
     @property
     def position(self):
         return self.applied_position.position
