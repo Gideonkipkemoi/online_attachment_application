@@ -41,6 +41,6 @@ class ApplyCreateView(LoginRequiredMixin, GroupRequiredMixin, SuccessMessageMixi
     form_class = ApplyStartDateForm
     group_required = [u'student']
     success_message = "%(applied_position)s successfully applied"
-    queryset = Post.objects.filter(apply_before__gte=F('apply_before'))
+    queryset = Post.objects.filter(apply_before__lte=F('start_date'))
     
     
