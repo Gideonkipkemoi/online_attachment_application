@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from .models import Post, Apply
 from django.db.models import F
@@ -11,13 +13,21 @@ from django.views.generic import (
 )
 from .mixins import GroupRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.utils import timezone
+from django.db.models import Q
 
 class PostListView(ListView):
     template_name = "home.html"
     model = Post
     context_object_name = "posts"
     ordering = ["-start_date"]
-    queryset = Post.objects.filter(start_date__gte=F('apply_before'))
+
+    def get_queryset(self):
+        current_date = timezone.now().date()
+        queryset = Post.objects.filter(
+            Q(start_date__gte=current_date) | Q(apply_before__gte=current_date)
+        ).order_by('-start_date')
+        return queryset
     
 
 class PostCreateView(LoginRequiredMixin, GroupRequiredMixin, SuccessMessageMixin,CreateView):

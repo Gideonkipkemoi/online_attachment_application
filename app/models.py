@@ -6,7 +6,6 @@ from django.urls import reverse
 from datetime import timedelta
 
 Universities = (
-    ("Learning institution","Learning institution"),
     ("Moi university","Moi university"),
     ("kenyatta university","Kenyatta university"),
     ("University of Nairobi","University of Nairobi"),
@@ -42,21 +41,26 @@ class Apply(models.Model):
     name = models.CharField(max_length=50)
     learning_institution = models.CharField(
         max_length=100,
-        choices=Universities,
-        default="Learning institution"
+        choices=Universities
     )
     applied_position = models.ForeignKey(Post, on_delete=models.CASCADE)
-    expected_start_date = models.DateField(validators=[validate_expected_start_date])
+    expected_start_date = models.DateField(validators=[validate_expected_start_date], blank=True, null=True)
     curriculum_vite = models.FileField(upload_to="cv_uploads")
     recommendation = models.FileField(upload_to="recom_uploads")
     application_date = models.DateField(default=timezone.now)
+
+    def save(self, *args, **kwargs):
+        if not self.expected_start_date:
+            self.expected_start_date=self.applied_position.start_date+timedelta(days=5)
+            super().save(*args,**kwargs)
+
     @property
     def position(self):
         return self.applied_position.position
 
     
     def __str__(self):
-        return self.name
+        return f'{self.name} application'
     
     def get_absolute_url(self):
         return reverse('home')

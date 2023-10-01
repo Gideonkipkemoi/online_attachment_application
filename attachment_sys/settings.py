@@ -59,7 +59,7 @@ ROOT_URLCONF = 'attachment_sys.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [r'C:\\Users\\Gideon Sang\\Desktop\\Sparta\src\\templates'],
+        'DIRS': [r'C:\\Users\\Administrator\\Desktop\\django_proj\\src\\templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

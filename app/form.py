@@ -17,7 +17,7 @@ class StartDateForm(ModelForm):
 class ApplyStartDateForm(ModelForm):
     class Meta:
         model = Apply
-        fields = ['name', 'learning_institution', 'applied_position',
+        fields = ['name','learning_institution', 'applied_position',
                 'expected_start_date', 'curriculum_vite', 'recommendation'
 ]
         widgets = {
